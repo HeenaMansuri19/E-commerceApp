@@ -22,7 +22,7 @@ const userSignUp = async (req, res) => {
                 registerData.save();
                 res.status(201).json({
                     success: true,
-                    message: "Registration successful",
+                    message: "Registration successfull",
 
                 });
             } catch (err) {
@@ -48,7 +48,7 @@ const userLogin = async (req, res) => {
                 if (userData.userEmail === userEmail && isPasswordMatch) {
                     const token = jwt.sign({ userId: userData._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' })
                     res.status(200).send({
-                        success: "success",
+                        success: true,
                         message: "Login successfull",
                         token: token
                     });
@@ -84,7 +84,7 @@ const resetPasswordSendEmail = async (req, res) => {
             });
             const emailSend = sendEmail(userEmail, token)
             return res.status(201).json({
-                success: "success",
+                success: true,
                 message: "Email sent successfully",
                 token: token,
                 userID: user.id,
@@ -119,7 +119,7 @@ const userResetPassword = async (req, res) => {
                     $set: { password: password },
                 });
                 res.status(200).json({
-                    success: "success",
+                    success: true,
                     message: "Password update successfully"
                 });
             } else {
@@ -131,7 +131,7 @@ const userResetPassword = async (req, res) => {
         } else {
             res.status(403).json({
                 success: "failure",
-                message: "Email is not found"
+                message: "Email is not found."
             });
         }
     } catch (err) {
@@ -147,5 +147,5 @@ module.exports = {
     userLogin,
     resetPasswordSendEmail,
     userResetPassword
-   
+
 }
