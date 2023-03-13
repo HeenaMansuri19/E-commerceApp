@@ -32,7 +32,7 @@ const schema = {
                 'password.minOfNumeric': '{#label} should contain at least {#min} numeric character',
                 'password.noWhiteSpaces': '{#label} should not contain white spaces'
             }),
-        vendorConatct: joi
+        vendorContact: joi
             .number()
             .integer()
             .min(100000000)

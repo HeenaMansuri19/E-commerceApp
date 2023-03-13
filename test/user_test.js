@@ -12,7 +12,7 @@ describe("User signUp API", () => {
     describe("POST/api/user", () => {
         it("It shouldnot return signup user details:", (done) => {
             const data = {
-                userName: "Heena Mansuri",
+                userName: "Heena",
                 userEmail: "cs20.heenamansuri@svceindore.ac.in",
                 password: "AAbc@123",
                 gender: "female",
@@ -35,9 +35,10 @@ describe("User signUp API", () => {
                 })
         })
         it("It should return signupdetail of user:", (done) => {
+            let email = (randomEmail({ domain: 'gmail.com' }))
             const data = {
                 userName: "Heena Mansuri",
-                userEmail: "cs2020.heenamansuri@svceindore.ac.in",
+                userEmail:email,
                 password: "AAbc@123",
                 gender: "female",
                 city: "Indore",
@@ -47,11 +48,13 @@ describe("User signUp API", () => {
             chai
                 .request(server)
                 .post("/user/singup")
+                .set("content-Type", "application/x-www-form-urlencoded")
+                .field(data)
                 .attach("profilePic","/Users/LENOVO/OneDrive/Pictures/Patienttracker.png", "Patienttracker.png")
                 .end((err, res) => {
                     res.should.have.status(201);
                     res.should.be.a("object");
-                    res.body.should.have.property("success").eq("true");
+                    res.body.should.have.property("success").eq(true);
                     res.body.should.have.property("message").eq("Registration successfull");
                     done();
                 })
