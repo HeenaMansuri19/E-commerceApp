@@ -49,18 +49,18 @@ const userLogin = async (req, res) => {
                     const token = jwt.sign({ userId: userData._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5d' })
                     res.status(200).send({
                         success: true,
-                        message: "Login successfull",
+                        message: "User has been login successfully",
                         token: token
                     });
                 } else {
                     res.status(401).send({
-                        success: "failure",
+                        success: false,
                         message: "Email or password is not valid",
                     });
                 }
             } else {
                 res.status(400).json({
-                    success: "failure",
+                    success: false,
                     message: "You are not a register user",
                 });
             }
@@ -91,7 +91,7 @@ const resetPasswordSendEmail = async (req, res) => {
             });
         } else {
             res.status(403).json({
-                success: "failure",
+                success: false,
                 message: "Email user is not found"
             })
         }
@@ -124,19 +124,19 @@ const userResetPassword = async (req, res) => {
                 });
             } else {
                 res.status(403).json({
-                    success: "failure",
+                    success: "false",
                     message: "Password and confirm password is not match"
                 });
             }
         } else {
             res.status(403).json({
-                success: "failure",
-                message: "Email is not found."
+                success: false,
+                message: "All fileds are required"
             });
         }
     } catch (err) {
         res.status(500).json({
-            success: "failure",
+            success: "false",
             message: err.message,
         });
     }

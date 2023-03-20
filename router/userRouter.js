@@ -8,6 +8,6 @@ const validation = require('../validations/user/userValidation')
 router.post("/signup", upload.single("profilePic"),validation.registerUserValidation,user.userSignUp)
 router.post("/userlogin", auth.isUser,validation.loginUserValidation, user.userLogin)
 router.post("/sendemail", user.resetPasswordSendEmail)
-router.post("/userResetPassword/:id/:token", user.userResetPassword)
+router.post("/userResetPassword/:id/:token",user.userResetPassword)
 
 module.exports = router;

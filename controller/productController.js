@@ -8,7 +8,7 @@ const addProduct = async (req, res) => {
     // const id = req.params.vendorId;
     try {
         const addProduct = await new productModelSchema(req.body)
-        const filePath = `/uploads/${req.file.filename}`;
+        const filePath = req.files.map(({filename})=>`/uploads/${filename}`);
         addProduct.productImage = filePath;
         try {
             await addProduct.save();
@@ -66,9 +66,9 @@ const productDetails = async (req, res) => {
 
 //4.delete product
 const deleteProduct = async (req, res) => {
-    const pid = req.params.pid;
+    const cartId = req.params.cartId;
     try {
-        const productDelete = await productModelSchema.findByIdAndDelete(pid, { $set: req.body });
+        const productDelete = await productModelSchema.findByIdAndDelete(cartId, { $set: req.body });
         res.status(201).json({
             success: true,
             message: "Product is deleted successfully!!",
@@ -81,9 +81,28 @@ const deleteProduct = async (req, res) => {
     }
 }
 
+//5.edit Product
+const editProduct = async (req, res) => {
+    const productId = req.params.id;
+    try {
+        const newProduct = await productModelSchema.findByIdAndUpdate(productId, { $set: req.body });
+        newProduct.save();
+        res.status(201).json({
+            success: true,
+            message: "Product edited successfully",
+        })
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            error: err.message,
+        })
+    }
+}
+
 module.exports = {
     addProduct,
     getProduct,
     productDetails,
-    deleteProduct
+    deleteProduct,
+    editProduct
 }
